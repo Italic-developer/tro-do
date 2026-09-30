@@ -40,6 +40,7 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
+import { useTodo } from "./TodoProvider";
 
 
 function Create() {
@@ -51,6 +52,7 @@ function Create() {
         });
     }
 
+    const { todos, setTodos } = useTodo()
     const formschema = z.object({
         name: z.string()
             .max(50, "Too long.")
@@ -79,9 +81,16 @@ function Create() {
         },
     })
     function onSubmit(values: z.infer<typeof formschema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
         console.log(values)
+        setTodos(prev => [...prev, {
+            id: crypto.randomUUID(),
+            title: values.name,
+            description: values.description,
+            dueDate: values.dueDate,
+            priority: values.priority,
+            subTasks: values.subTasks,
+            status: "Pending"
+        }])
     }
 
     return (
