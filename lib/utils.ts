@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { Todo } from "./types";
+  const critTime = 2.5 * 24 * 60 * 60 * 1000
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -218,3 +220,10 @@ export function getTodoMessage(completed: number, total: number) {
 
     return messages[Math.floor(Math.random() * messages.length)]
 }
+
+export const isCrit = (todo: Todo): Todo["status"] => {
+        if (todo.status === "Completed") {
+            return "Completed"
+        }
+        return new Date(todo.dueDate).getTime() - new Date().getTime() < critTime ? "Critical" : "Pending"
+    }

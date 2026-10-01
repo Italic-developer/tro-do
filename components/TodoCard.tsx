@@ -1,12 +1,15 @@
-import { Calendar, CircleCheck, PencilIcon, Trash2 } from 'lucide-react';
+import { ArrowUpNarrowWideIcon, Calendar, CircleCheck, CircleDashed, PencilIcon, SquareArrowOutUpRight, Trash2 } from 'lucide-react';
 import React from 'react'
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Todo } from '@/lib/types';
+import { isCrit } from '@/lib/utils';
 
 function TodoCard({ todo, setTodos }: { todo: Todo, setTodos: React.Dispatch<React.SetStateAction<Todo[]>> }) {
+    const isCompleted = todo.status === "Completed"
+
     return (
-        <Card key={todo.id}>
+        <Card >
             <CardHeader className="flex justify-between items-start">
                 <CardTitle className="text-2xl font-bold">{todo.title}</CardTitle>
                 <span className={`text-white rounded-full px-4 py-1 text-sm font-bold
@@ -29,19 +32,31 @@ function TodoCard({ todo, setTodos }: { todo: Todo, setTodos: React.Dispatch<Rea
                     {todo.priority} Priority
                 </span>
                 <div className="flex items-center gap-1">
-                    {todo.status !== "Completed" && (
-                        <Button onClick={() => {
-                            setTodos(prev =>
-                                prev.map(t =>
-                                    t.id === todo.id ? { ...t, status: "Completed" } : t
-                                )
-                            );
-                        }} variant="secondary" size="icon" className="hover:bg-secondary/40" title="Mark as completed">
-                            <CircleCheck className="text-green-500" />
-                        </Button>
-                    )}
-                    <Button variant="secondary" size="icon" className="hover:bg-secondary/40" title="Edit">
-                        <PencilIcon />
+
+                    <Button onClick={() => {
+
+                        setTodos(prev =>
+                            prev.map(t => {
+                                if (t.id !== todo.id) return t
+
+                                const newStatus = isCompleted
+                                    ? isCrit(t)
+                                        ? "Critical"
+                                        : "Pending"
+                                    : "Completed"
+
+                                return {
+                                    ...t,
+                                    status: newStatus
+                                }
+                            })
+                        )
+                    }} variant="secondary" size="icon" className="hover:bg-secondary/40" title={isCompleted ? "Mark as pending" : "Mark as completed"}>
+                        {isCompleted ? <CircleDashed className="text-gray-500" /> : <CircleCheck className="text-green-500" />}
+                    </Button>
+
+                    <Button variant="secondary" size="icon" className="hover:bg-secondary/40" title="View">
+                        <SquareArrowOutUpRight />
                     </Button>
                     <Button onClick={() => {
                         setTodos(prev => prev.filter(t => t.id !== todo.id));
@@ -50,7 +65,7 @@ function TodoCard({ todo, setTodos }: { todo: Todo, setTodos: React.Dispatch<Rea
                     </Button>
                 </div>
             </CardFooter>
-        </Card>
+        </Card >
     )
 }
 

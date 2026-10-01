@@ -45,8 +45,8 @@ function Create() {
 
     const { setTodos } = useTodo()
     const [subTasksInput, setSubTaskInput] = useState("")
+    const [open, setOpen] = useState(false)
     const [reset, setReset] = useState(false)
-
     const form = useForm<z.infer<typeof formschema>>({
         resolver: zodResolver(formschema),
 
@@ -77,10 +77,11 @@ function Create() {
         form.reset()
         setSubTaskInput("")
         setReset(true)
+        setOpen(false)
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button
                     variant="secondary"
@@ -153,7 +154,7 @@ function Create() {
                                 control={form.control}
                                 name="dueDate"
                                 render={({ field }) => (
-                                    <DatePicker field={field} reset />
+                                    <DatePicker field={field} reset={reset} />
                                 )}
                             />
 

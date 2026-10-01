@@ -1,5 +1,6 @@
 "use client"
 import { mockTodos, Todo } from "@/lib/types";
+import { isCrit } from "@/lib/utils";
 import React, { createContext, useContext, useEffect, useState } from "react"
 
 interface TodoContextType {
@@ -12,12 +13,13 @@ const TodoContext = createContext<TodoContextType | undefined>(undefined)
 export function TodoProvider({ children }: { children: React.ReactNode }) {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [loaded, setLoaded] = useState(false);
+
     useEffect(() => {
-        if (localStorage.getItem("todos") == "[]") {
+        if (localStorage.getItem("todos") == "[]" || !localStorage.getItem("todos")) {
             console.log("todos")
             //TODO Remove this when in prod
             localStorage.setItem("todos", JSON.stringify(mockTodos));
-            setTodos(mockTodos || "[]");
+            setTodos(mockTodos || []);
         }
 
         const storedTodos = JSON.parse(localStorage.getItem("todos") || "[]");
@@ -25,7 +27,8 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
             const parsedTodos = storedTodos.map((todo: Todo) => {
                 return {
                     ...todo,
-                    dueDate: new Date(todo.dueDate)
+                    dueDate: new Date(todo.dueDate),
+                    status: isCrit(todo)
                 }
             })
             setTodos(parsedTodos)
