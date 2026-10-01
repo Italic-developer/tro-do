@@ -1,5 +1,5 @@
 "use client"
-import { mockTodos, Todo } from "@/lib/Todos";
+import { mockTodos, Todo } from "@/lib/types";
 import React, { createContext, useContext, useEffect, useState } from "react"
 
 interface TodoContextType {

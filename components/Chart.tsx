@@ -1,26 +1,22 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
+
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
 
 import {
     Card,
     CardContent,
-    CardDescription,
+
     CardFooter,
-    CardHeader,
-    CardTitle,
+
 } from "@/components/ui/card"
 import {
     ChartConfig,
     ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
+
 } from "@/components/ui/chart"
+import { useTodo } from "./TodoProvider";
 
-export const description = "A radial chart with stacked sections"
-
-const chartData = [{ complete: 5, incomplete: 28 }]
 
 const chartConfig = {
     complete: {
@@ -31,29 +27,38 @@ const chartConfig = {
         label: "incomplete",
         color: "var(--chart-1)",
     },
+    critical: {
+        label: "critical",
+        color: "var(--chart-2)",
+    },
 } satisfies ChartConfig
 
 export function ChartRadialStacked() {
-    const totalTasks = chartData[0].complete + chartData[0].incomplete
-
+    const { todos } = useTodo()
+    const complete = todos.filter((todo) => (todo.status == "Completed")).length
+    const incomplete = todos.filter((todo) => (todo.status == "Pending")).length
+    const critical = todos.filter((todo) => (todo.status == "Critical")).length
+    const totalTasks = complete + incomplete + critical
     return (
-        <Card className="flex flex-col justify-center w-3/5 ml-auto bg-inherit shadow-transparent p-3 border-none  ">
+        <Card className="flex flex-col justify-center items-center w-3/5  ml-auto bg-inherit shadow-transparent p-3 border-none  ">
 
-            <CardContent className="flex flex-1 items-center text-muted-foreground -mb-32">
+            <CardContent className="p-0">
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square w-full max-w-[250px]"
+                    className="mx-auto w-full max-w-62.5 h-32"
                 >
                     <RadialBarChart
-                        data={chartData}
+                        data={
+                            [{
+                                complete, incomplete, critical
+                            }]
+                        }
                         endAngle={180}
                         innerRadius={80}
                         outerRadius={130}
+                        cy={"95%"}
                     >
-                        <ChartTooltip
-                            cursor={false}
-                            content={<ChartTooltipContent hideLabel />}
-                        />
+
                         <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
                             <Label
                                 content={({ viewBox }) => {
@@ -82,28 +87,38 @@ export function ChartRadialStacked() {
                                 }}
                             />
                         </PolarRadiusAxis>
-                        <RadialBar
-                            dataKey="complete"
-                            stackId="a"
-                            cornerRadius={5}
-                            fill="var(--color-complete)"
-                            className="stroke-transparent stroke-2"
-                        />
-                        <RadialBar
-                            dataKey="incomplete"
-                            fill="var(--color-incomplete)"
-                            stackId="a"
-                            cornerRadius={5}
-                            className="stroke-transparent stroke-2"
-                        />
+                        {["complete", "incomplete", "critical"].map((status,) => (
+                            <RadialBar
+                                key={status}
+                                dataKey={status}
+                                stackId="a"
+
+                                fill={`var(--color-${status})`}
+                                className="stroke-inherit stroke-3"
+                            />))}
+
                     </RadialBarChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
-                <div className="text-muted-foreground leading-none">
-                    Showing total Tasks Based on Completion
-                </div>
+            <CardFooter className="flex justify-center gap-4 pt-1 p-0 text-sm">
+                {[
+                    { key: "3", label: "Complete" },
+                    { key: "1", label: "Incomplete" },
+                    { key: "2", label: "Critical" },
+                ].map((item) => (
+                    <div key={item.key} className="flex items-center gap-1.5">
+                        <span
+                            className={`size-2.5 rounded-full `}
+                            style={{
+                                backgroundColor: `var(--chart-${item.key})`,
+                            }}
+                        />
+                        <span className="text-muted-foreground">
+                            {item.label}
+                        </span>
+                    </div>
+                ))}
             </CardFooter>
-        </Card>
+        </Card >
     )
 }

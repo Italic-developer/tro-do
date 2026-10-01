@@ -2,7 +2,7 @@ import { Calendar, CircleCheck, PencilIcon, Trash2 } from 'lucide-react';
 import React from 'react'
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Todo } from '@/lib/Todos';
+import { Todo } from '@/lib/types';
 
 function TodoCard({ todo, setTodos }: { todo: Todo, setTodos: React.Dispatch<React.SetStateAction<Todo[]>> }) {
     return (

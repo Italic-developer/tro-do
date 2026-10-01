@@ -1,11 +1,30 @@
+"use client"
+import { getTodoMessage } from "@/lib/utils";
 import { ChartRadialStacked } from "./Chart"
+import { useTodo } from "./TodoProvider";
+import { useMemo } from "react";
 
 export default function Header() {
+    const { todos } = useTodo()
+    const complete = todos.filter((todo) => (todo.status == "Completed")).length
+    const message = useMemo(() => (getTodoMessage(complete, todos.length)), [complete, todos.length])
     return (
         <div className="flex flex-row gap-5 bg-accent p-4 rounded-md m-3 items-center  ">
-            <div className="flex flex-col gap-5 bg-inherit p-4 rounded-md m-3 ">
-                <h2 className="font-semibold text-3xl">Welcome back, <span className="text-primary font-bold text-4xl">Patrick</span></h2>
-                <p className="font-light text-2xl text-muted-foreground">You Have 3 undone tasks out of your original 10 </p>
+            <div className="flex flex-col gap-2 bg-inherit p-4 rounded-md m-3">
+                <h2 className="font-semibold text-3xl">
+                    Welcome back,{" "}
+                    <span className="text-primary font-bold text-4xl">
+                        Patrick
+                    </span>
+                </h2>
+
+                <p className="font-light text-lg text-muted-foreground">
+                    {message}
+                </p>
+
+                <p className="text-sm text-muted-foreground">
+                    {complete} of {todos.length} tasks completed
+                </p>
             </div>
             <ChartRadialStacked />
         </div>
