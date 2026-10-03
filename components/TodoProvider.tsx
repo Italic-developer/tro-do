@@ -40,7 +40,7 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
     }, [])
 
     useEffect(() => {
-        if (!loaded) return
+        if (!loaded) return;
         localStorage.setItem("todos", JSON.stringify(todos));
     }, [loaded, todos])
 
