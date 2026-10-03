@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import Create from "./Create";
 import { useTodo } from "./TodoProvider";
 import TodoCard from "./TodoCard";
-import { Todo } from "@/lib/types";
+
 import { ListTodo } from "lucide-react";
-import { useState } from "react";
 
 function Todos() {
 
