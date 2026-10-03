@@ -40,7 +40,7 @@ export function ChartRadialStacked() {
     const critical = todos.filter((todo) => (todo.status == "Critical")).length
     const totalTasks = complete + incomplete + critical
     return (
-        <Card className="flex flex-col justify-center items-center w-3/5  ml-auto bg-inherit shadow-transparent p-3 border-none  ">
+        <Card className="flex flex-col justify-center items-center hidden md:inline w-full md:w-3/5   ml-auto bg-inherit shadow-transparent p-3 border-none  ">
 
             <CardContent className="p-0">
                 <ChartContainer

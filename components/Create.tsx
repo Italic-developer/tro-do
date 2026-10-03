@@ -58,7 +58,9 @@ function Create() {
         setTodos(prev => [
             ...prev,
             {
-                id: crypto.randomUUID(),
+                id: crypto.randomUUID
+                    ? crypto.randomUUID()
+                    : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
                 title: values.name,
                 description: values.description,
                 dueDate: values.dueDate,
