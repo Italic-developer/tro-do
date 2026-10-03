@@ -1,8 +1,5 @@
 "use client"
-import { Calendar, CircleCheck, PencilIcon, PlusCircle, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Create from "./Create";
@@ -10,12 +7,7 @@ import { useTodo } from "./TodoProvider";
 import TodoCard from "./TodoCard";
 
 function Todos() {
-    const daysToDeadline = (deadline: Date) => {
-        const today = new Date();
-        const timeDiff = deadline.getTime() - today.getTime();
-        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-        return daysDiff;
-    }
+
     const searchParams = useSearchParams()
     const router = useRouter()
     const search: "Completed" | "Pending" | "Critical" | "All Tasks" | null = searchParams.get('status') as "Completed" | "Pending" | "Critical" | "All Tasks" | null;
@@ -30,7 +22,11 @@ function Todos() {
                     {["All Tasks", "Completed", "Pending", "Critical",].map((status) => (
                         <Button key={status}
                             onClick={() => {
-                                status == "All Tasks" ? router.push("/") : router.push(`/?status=${status}`)
+                                if (status == "All Tasks") {
+                                    router.push("/")
+                                } else {
+                                    router.push(`/?status=${status}`)
+                                }
                             }}
                             variant="secondary" size="sm" className={`shrink-0 hover:bg-secondary/40 ${status === search && "bg-secondary text-secondary-foreground"
                                 }`}>
@@ -52,7 +48,7 @@ function Todos() {
                     {filteredTodos.length > 0 ? (filteredTodos.map((todo) => (
                         <TodoCard key={todo.id} todo={todo} setTodos={setTodos} />
                     ))) : (
-                        <h2 className="text-lg font-light text-muted-foreground  text-center p-3">You're Safe, for Now ...</h2>
+                        <h2 className="text-lg font-light text-muted-foreground  text-center p-3">You&rsquo;re Safe, for Now ...</h2>
                     )}
                 </div>
             </div>

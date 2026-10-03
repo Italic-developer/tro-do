@@ -1,4 +1,4 @@
-import { ArrowUpNarrowWideIcon, Calendar, CircleCheck, CircleDashed, PencilIcon, SquareArrowOutUpRight, Trash2 } from 'lucide-react';
+import { Calendar, CircleCheck, CircleDashed, Trash2 } from 'lucide-react';
 import React from 'react'
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';

@@ -48,9 +48,10 @@ function DatePicker({ field, reset, editing }: { field: ControllerRenderProps<z.
         }
     }
     useEffect(() => {
-        reset ? setInputVal("") : null;
-    }, [field.value])
-
+        if (reset) {
+            setInputVal("")
+        }
+    }, [reset])
     return (
         <FormItem className="flex flex-col">
             <FormLabel>Due Date</FormLabel>
@@ -126,8 +127,8 @@ function DatePicker({ field, reset, editing }: { field: ControllerRenderProps<z.
 
             {isInvalid && (
                 <p className="text-sm text-red-500">
-                    Couldn't understand that. Try something like
-                    "next Monday at 3pm".
+                    Couldn&apos;t understand that. Try something like
+                    &apos;next Monday at 3pm&apos;.
                 </p>
             )}
 
