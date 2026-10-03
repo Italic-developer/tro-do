@@ -17,7 +17,7 @@ function Todos() {
     const search: "Completed" | "Pending" | "Critical" | "All Tasks" | null = searchParams.get('status') as "Completed" | "Pending" | "Critical" | "All Tasks" | null;
     const { todos, setTodos } = useTodo()
     const filteredTodos = todos.filter(todo => todo.status === search || !search)
-    const [searching, setSearching] = useState(false)
+
     return (
         <div className="flex flex-col gap-6 px-3 py-4">
 
@@ -28,10 +28,10 @@ function Todos() {
                             onClick={() => {
                                 if (status == "All Tasks") {
                                     router.push("/")
-                                    setSearching(false)
+
                                 } else {
                                     router.push(`/?status=${status}`)
-                                    setSearching(true)
+
                                 }
                             }}
                             variant="secondary" size="sm" className={`shrink-0 hover:bg-secondary/40 ${status === search && "bg-secondary text-secondary-foreground"
