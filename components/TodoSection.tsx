@@ -19,10 +19,9 @@ function Todos() {
     const searchParams = useSearchParams()
     const router = useRouter()
     const search: "Completed" | "Pending" | "Critical" | "All Tasks" | null = searchParams.get('status') as "Completed" | "Pending" | "Critical" | "All Tasks" | null;
-
     const { todos, setTodos } = useTodo()
-    console.log(todos)
-    const upcomingTodos = todos.filter(todo => daysToDeadline(todo.dueDate) < 5 && todo.status !== "Completed");
+    const filteredTodos = todos.filter(todo => todo.status === search || !search)
+
     return (
         <div className="flex flex-col gap-6 px-3 py-4">
 
@@ -43,29 +42,25 @@ function Todos() {
             </div>
 
 
-            <div className="flex flex-row gap-4">
-                <div className="bg-card text-card-foreground p-4 border rounded-md w-4/6">
-                    <h2 className="font-semibold text-3xl mb-4">Your Tasks</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {todos.filter(todo => todo.status === search || !search).map((todo, index) => (
-                            <TodoCard key={todo.id} todo={todo} setTodos={setTodos} />
-                        ))}
-                    </div>
-                </div>
-                <div className="bg-card text-card-foreground p-4 border rounded-md w-2/6 gap-3 flex flex-col">
-                    <h2 className="font-semibold text-3xl mb-4">Upcoming Deadlines</h2>
 
-                    {upcomingTodos.length > 0 ? (
-                        upcomingTodos.map(todo => (
-                            <TodoCard key={todo.id} todo={todo} setTodos={setTodos} />
-                        ))
-                    ) : (
+            <div className="bg-card text-card-foreground p-5 border rounded-xl">
+                <h2 className="font-semibold text-3xl mb-5">
+                    Your Tasks <span className="ml-2 text-base font-normal text-muted-foreground">
+                        {filteredTodos.length}
+                    </span>
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                    {filteredTodos.length > 0 ? (filteredTodos.map((todo) => (
+                        <TodoCard key={todo.id} todo={todo} setTodos={setTodos} />
+                    ))) : (
                         <h2 className="text-lg font-light text-muted-foreground  text-center p-3">You're Safe, for Now ...</h2>
                     )}
                 </div>
-
             </div>
+
+
         </div>
+
 
     );
 }
