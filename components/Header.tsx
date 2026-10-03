@@ -6,7 +6,7 @@ import { useTodo } from "./TodoProvider";
 import { useMemo } from "react";
 
 export default function Header() {
-    const { todos } = useTodo()
+    const { todos, name } = useTodo()
 
     const complete = todos.filter(
         (todo) => todo.status === "Completed"
@@ -24,7 +24,7 @@ export default function Header() {
                 <h2 className="font-semibold text-3xl">
                     Welcome back,{" "}
                     <span className="text-primary font-bold text-4xl">
-                        Patrick
+                        {name}
                     </span>
                 </h2>
 

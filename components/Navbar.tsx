@@ -13,10 +13,11 @@ import {
 
 import { User2 } from 'lucide-react'
 import React from 'react'
+import { useTodo } from "./TodoProvider";
 
 function Navbar() {
     const { setTheme } = useTheme()
-
+    const { name } = useTodo()
     return (
         <div className='flex items-center justify-between flex-row border-b-2 p-2 b-[var(border)]'>
             <h1 className='text-3xl font-bold text-primary'>Tro-do</h1>
@@ -44,7 +45,7 @@ function Navbar() {
                 <div className="border-3 border-secondary h-full"></div>
 
                 <User2 />
-                <p>Patrick</p>
+                <p>{name}</p>
             </div>
         </div>
     )
