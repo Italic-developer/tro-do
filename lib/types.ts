@@ -5,6 +5,7 @@ export interface Todo {
     dueDate: Date;
     priority: "Low" | "Medium" | "High";
     status: "Completed" | "Pending" | "Critical";
+    subTasks?: string[];
 
 }
 export const mockTodos: Todo[] = [

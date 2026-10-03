@@ -11,7 +11,7 @@ import { ControllerRenderProps } from 'react-hook-form';
 import { z } from 'zod';
 import { formschema } from '@/lib/schemas';
 
-function DatePicker({ field, reset }: { field: ControllerRenderProps<z.infer<typeof formschema>, "dueDate">, reset: boolean }) {
+function DatePicker({ field, reset, editing }: { field: ControllerRenderProps<z.infer<typeof formschema>, "dueDate">, reset?: boolean, editing: boolean }) {
     function formatDateTime(date: Date | undefined) {
         if (!date) return ""
 
@@ -59,6 +59,7 @@ function DatePicker({ field, reset }: { field: ControllerRenderProps<z.infer<typ
                 <Input
                     placeholder="Next Friday at 5pm"
                     value={inputVal}
+                    disabled={!editing}
                     onChange={(e) =>
                         handleInputChange(e.target.value)
                     }
@@ -72,8 +73,9 @@ function DatePicker({ field, reset }: { field: ControllerRenderProps<z.infer<typ
                 />
 
                 <Popover
-                    open={open}
+                    open={open && editing}
                     onOpenChange={setOpen}
+
                 >
                     <PopoverTrigger asChild>
                         <Button

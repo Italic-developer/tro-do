@@ -6,8 +6,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { CalendarIcon, PlusCircle, X } from "lucide-react"
-import { parseDate } from "chrono-node"
+import { PlusCircle, X } from "lucide-react"
+
 import {
     Select,
     SelectContent,
@@ -15,17 +15,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Calendar } from "@/components/ui/calendar"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -154,7 +147,7 @@ function Create() {
                                 control={form.control}
                                 name="dueDate"
                                 render={({ field }) => (
-                                    <DatePicker field={field} reset={reset} />
+                                    <DatePicker field={field} reset={reset} editing={true} />
                                 )}
                             />
 

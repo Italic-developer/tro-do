@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Todo } from '@/lib/types';
 import { isCrit } from '@/lib/utils';
+import TodoView from './TodoView';
 
 function TodoCard({ todo, setTodos }: { todo: Todo, setTodos: React.Dispatch<React.SetStateAction<Todo[]>> }) {
     const isCompleted = todo.status === "Completed"
@@ -55,9 +56,9 @@ function TodoCard({ todo, setTodos }: { todo: Todo, setTodos: React.Dispatch<Rea
                         {isCompleted ? <CircleDashed className="text-gray-500" /> : <CircleCheck className="text-green-500" />}
                     </Button>
 
-                    <Button variant="secondary" size="icon" className="hover:bg-secondary/40" title="View">
-                        <SquareArrowOutUpRight />
-                    </Button>
+
+                    <TodoView todo={todo} />
+
                     <Button onClick={() => {
                         setTodos(prev => prev.filter(t => t.id !== todo.id));
                     }} variant="secondary" size="icon" className="hover:bg-secondary/40" title="Delete">
