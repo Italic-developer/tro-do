@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- App Background -->
+  <rect width="512" height="512" rx="112" fill="#0F172A" />
+
+  <!-- List Document Sheet -->
+  <rect x="96" y="80" width="320" height="352" rx="40" fill="#1E293B" />
+
+  <!-- Task 1 (Completed with bright green check) -->
+  <circle cx="160" cy="168" r="28" fill="#10B981" />
+  <path d="M148 168L156 176L172 160" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  <rect x="216" y="156" width="144" height="24" rx="12" fill="#475569" />
+
+  <!-- Task 2 (Pending) -->
+  <rect x="132" y="228" width="56" height="56" rx="16" stroke="#64748B" stroke-width="12" />
+  <rect x="216" y="244" width="160" height="24" rx="12" fill="#94A3B8" />
+
+  <!-- Task 3 (Pending) -->
+  <rect x="132" y="316" width="56" height="56" rx="16" stroke="#64748B" stroke-width="12" />
+  <rect x="216" y="332" width="112" height="24" rx="12" fill="#94A3B8" />
+</svg>
