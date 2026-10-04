@@ -88,7 +88,7 @@ function Create() {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="flex flex-col gap-4 ">
+          <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
                 <DialogHeader>
                     <DialogTitle>Create New Task</DialogTitle>
 
